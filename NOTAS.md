@@ -2,6 +2,12 @@
 
 ## 12/08/2024 14:01
 
+### Cronograma
+
+Ficar pronto até dia 16/09
+
+### Ajustes
+
 * Remover tela inicial (ir direto para fila)
 * Configurações
     * Página para gerenciar procedimentos
@@ -13,4 +19,5 @@
     * (Tabela dinâmica → filtro)*
 
 ### Atualizar
+
     * Trocar número SUS por CPF
