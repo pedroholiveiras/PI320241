@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "patients",
+  "info": {
+    "singularName": "patient",
+    "pluralName": "patients",
+    "displayName": "Patient",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fname": {
+      "type": "string",
+      "required": true
+    },
+    "lname": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "cpf": {
+      "type": "string",
+      "required": true,
+      "regex": "([0-9]{2}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[\\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[-]?[0-9]{2})"
+    },
+    "sus": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": false
+    },
+    "withdrawal": {
+      "type": "date"
+    },
+    "withdrawer": {
+      "type": "string"
+    },
+    "procedure": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::procedure.procedure",
+      "inversedBy": "patients"
+    },
+    "priority": {
+      "type": "integer",
+      "max": 2,
+      "min": 0
+    },
+    "status": {
+      "type": "integer",
+      "max": 2,
+      "min": 0
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "procedures",
+  "info": {
+    "singularName": "procedure",
+    "pluralName": "procedures",
+    "displayName": "Procedure",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "enumeration",
+      "enum": [
+        "Município",
+        "Policlínica"
+      ]
+    },
+    "patients": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::patient.patient",
+      "mappedBy": "procedure"
+    }
+  }
+}
