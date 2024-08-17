@@ -25,7 +25,7 @@ class SecretariaService {
         phone?: string,
         priority: string,
         status: string,
-        procedure: Procedure
+        procedure: number
     ): Promise<Patient> {
         const {data} = await api.post("/patients", {
             data: {
@@ -36,7 +36,7 @@ class SecretariaService {
                 phone: phone,
                 priority: phone,
                 status: status,
-                procedure: procedure.id
+                procedure: parseInt(procedure)
             }
         },
         {

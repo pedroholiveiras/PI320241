@@ -6,11 +6,11 @@
         cpf: string,
         sus: string,
         phone?: string,
-        priority: string,
-        status: string,
+        priority: number,
+        status: number,
         withdrawal?: Date,
         withdrawer?: string,
-        procedure: Procedure
+        procedure: Procedur1
     }>();
 </script>
 

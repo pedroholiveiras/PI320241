@@ -9,7 +9,7 @@ export type Patient = {
     status?: string,
     withdrawal?: Date,
     withdrawer?: string,
-    procedure: Procedure
+    procedure: number
 };
 
 export type Procedure = {

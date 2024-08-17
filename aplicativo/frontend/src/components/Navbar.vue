@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <router-link to="/fila" class="navbar-brand text-primary">
                 <img src="@/assets/ssq.svg" height="32" alt="Brasão de Quixadá">
-                <span class="ms-2">Secretaria de Saúde™</span>
+                <span class="ms-2">Secretaria de Saúde</span>
             </router-link>
         </div>
     </nav>

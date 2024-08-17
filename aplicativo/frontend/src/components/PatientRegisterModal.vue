@@ -21,14 +21,14 @@
             procedure
         } = patient.value;
         
-        await secretariaService.create(
+        await secretariaService.newPatient(
             fname,
             lname,
             cpf,
             sus,
             phone,
-            priority,
-            procedure
+            parseInt(priority),
+            parseInt(procedure)
         );
     }
 </script>
@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="col mb-3">
                                     <label for="patientLastName" class="form-label">Sobrenome</label>
-                                    <input type="text" class="form-control" id="patientLastName" v-model="patient.lname">
+                                    <input type="text" class="form-control" id="patientLastName" v-model="patient.lname" required>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="patientLastName" class="form-label">Procedimento</label>
-                            <select class="form-select" aria-label="Procedimento" v-model="patient.procedure.id">
+                            <select class="form-select" aria-label="Procedimento" v-model="patient.procedure">
                                 <option v-for="procedure in procedures" :key="procedures.id" :value="procedure.id">
                                     {{procedure.attributes.name}} ({{procedure.attributes.address}})
                                 </option>
@@ -89,8 +89,12 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="newPatient" :disabled="!(patient.fname && patient.lname && patient.cpf && patient.sus && patient.procedure && patient.priority)">
+                        Salvar
+                    </button>
                 </div>
             </div>
         </div>
