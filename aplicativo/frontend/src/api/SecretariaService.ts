@@ -18,8 +18,7 @@ class SecretariaService {
     };
     
     async newPatient(
-        fname: string,
-        lname: string,
+        name: string,
         cpf: string,
         sus: string,
         phone?: string,
@@ -29,8 +28,7 @@ class SecretariaService {
     ): Promise<Patient> {
         const {data} = await api.post("/patients", {
             data: {
-                fname: fname,
-                lname: lname,
+                name: name,
                 cpf: cpf,
                 sus: sus,
                 phone: phone,
@@ -50,8 +48,7 @@ class SecretariaService {
 
     async updatePatient(
         id: number,
-        fname: string,
-        lname: string,
+        name: string,
         cpf: string,
         sus: string,
         phone?: string,
@@ -63,8 +60,7 @@ class SecretariaService {
     ): Promise<Patient> {
         const {data} = await api.put(`/patients/${id}`, {
             data: {
-                fname: fname,
-                lname: lname,
+                name: name,
                 cpf: cpf,
                 sus: sus,
                 phone: phone,

@@ -32,8 +32,7 @@
             <tbody v-for="patient in patients" :key="patient.id">
                 <QueueItem
                     :id="patient.id"
-                    :fname="patient.attributes.fname"
-                    :lname="patient.attributes.lname"
+                    :name="patient.attributes.name"
                     :cpf="patient.attributes.cpf"
                     :sus="patient.attributes.cpf"
                     :phone="patient.attributes.phone"

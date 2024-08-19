@@ -12,8 +12,7 @@
 
     async function newPatient() {
         const {
-            fname,
-            lname,
+            name,
             cpf,
             sus,
             phone,
@@ -22,8 +21,7 @@
         } = patient.value;
         
         await secretariaService.newPatient(
-            fname,
-            lname,
+            name,
             cpf,
             sus,
             phone,
@@ -42,17 +40,9 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="container p-0">
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="patientFirstName" class="form-label">Nome</label>
-                                    <input type="text" class="form-control" id="patientName" v-model="patient.fname">
-                                </div>
-                                <div class="col mb-3">
-                                    <label for="patientLastName" class="form-label">Sobrenome</label>
-                                    <input type="text" class="form-control" id="patientLastName" v-model="patient.lname" required>
-                                </div>
-                            </div>
+                        <div class="col mb-3">
+                            <label for="patientFirstName" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="patientName" v-model="patient.name">
                         </div>
                         <div class="container p-0">
                             <div class="row">
@@ -92,7 +82,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Cancelar
                     </button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="newPatient" :disabled="!(patient.fname && patient.lname && patient.cpf && patient.sus && patient.procedure && patient.priority)">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="newPatient" :disabled="!(patient.name && patient.cpf && patient.sus && patient.procedure && patient.priority)">
                         Salvar
                     </button>
                 </div>

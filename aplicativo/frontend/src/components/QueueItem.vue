@@ -1,8 +1,7 @@
 <script setup lang="ts">
     const props = defineProps<{
         id: number,
-        fname: string,
-        lname: string,
+        name: string,
         cpf: string,
         sus: string,
         phone?: string,
@@ -16,7 +15,7 @@
 
 <template>
     <tr>
-        <td>{{fname}} {{lname}}</td>
+        <td>{{name}}</td>
         <td style="font-family: monospace">{{cpf}}</td>
         <td>{{procedure.attributes.name}}</td>
         <td class="text-center">
