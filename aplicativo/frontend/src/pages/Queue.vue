@@ -1,16 +1,31 @@
 <script setup lang="ts">
     import {ref, onMounted} from "vue";
     import {secretariaService} from "@/api/SecretariaService";
+    import {isAxiosError} from "axios";
     import type {Patient} from "@/types";
 
     import Filter from "@/components/Filter.vue";
     import QueueItem from "@/components/QueueItem.vue";
     import PatientRegisterModal from "@/components/PatientRegisterModal.vue";
 
+    const loading = ref(true);
+    const error = ref("");
+
     const patients = ref<Patient[]>([]);
 
     onMounted(async () => {
-        patients.value = await secretariaService.getPatients();
+        try {
+            patients.value = await secretariaService.getPatients();
+        } catch(e) {
+            if (isAxiosError(e)) {
+                error.value = e.response?.data.error.message;
+            } else if (e instanceof Error) {
+                error.value = e.message;
+            }
+        } finally {
+            loading.value = false;
+        }
+        console.log(error);
     });
 </script>
 

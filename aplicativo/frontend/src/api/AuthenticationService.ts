@@ -15,7 +15,7 @@ class AuthenticationService {
         user.role = await this.getRole(user);
 
         const userStore = useUserStore();
-        userStore.user = user
+        userStore.user = user;
 
         localStorage.setItem("role", user.role);
         localStorage.setItem("username", user.username);

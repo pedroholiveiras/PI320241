@@ -82,8 +82,13 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Cancelar
                     </button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="newPatient" :disabled="!(patient.name && patient.cpf && patient.sus && patient.procedure && patient.priority)">
-                        Salvar
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        @click="newPatient"
+                        :disabled="!(patient.name && patient.cpf && patient.sus && patient.procedure && patient.priority)"
+                        > Salvar
                     </button>
                 </div>
             </div>

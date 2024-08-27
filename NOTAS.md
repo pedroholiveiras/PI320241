@@ -14,6 +14,8 @@
     * Item: Info. paciente e procedimento (p), alterar de acordo com filtro selecionado
 * Modal cadastro paciente
 * Modal detalhes do procedimento
+* Tela login
+* Cadastro procedimento
 
 ### Entidades
 

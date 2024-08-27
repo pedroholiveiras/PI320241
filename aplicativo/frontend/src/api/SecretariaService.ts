@@ -21,7 +21,7 @@ class SecretariaService {
         name: string,
         cpf: string,
         sus: string,
-        phone?: string,
+        phone: string,
         priority: string,
         status: string,
         procedure: number
@@ -34,7 +34,7 @@ class SecretariaService {
                 phone: phone,
                 priority: phone,
                 status: status,
-                procedure: parseInt(procedure)
+                procedure: procedure
             }
         },
         {

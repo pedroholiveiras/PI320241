@@ -1,11 +1,16 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Queue from "@/pages/Queue.vue";
+import Login from "@/pages/Login.vue";
 
 const routes = [
     {
         path: "/",
-        alias: "/fila",
+        alias: "/lista",
         component: Queue
+    },
+    {
+        path: "/login",
+        component: Login
     }
 ];
 

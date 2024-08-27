@@ -12,14 +12,9 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "fname": {
+    "name": {
       "type": "string",
       "required": true
-    },
-    "lname": {
-      "type": "string",
-      "required": true,
-      "unique": true
     },
     "cpf": {
       "type": "string",
