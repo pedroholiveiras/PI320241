@@ -2,17 +2,17 @@
     import {ref, onMounted} from "vue";
     import {secretariaService} from "@/api/SecretariaService";
     import {isAxiosError} from "axios";
-    import type {Patient} from "@/types";
+    import {type Patient} from "@/types";
+    import {usePatientStore} from "@/stores/patientStore";
 
     import Filter from "@/components/Filter.vue";
     import QueueItem from "@/components/QueueItem.vue";
     import PatientRegisterModal from "@/components/PatientRegisterModal.vue";
-
+  
+    const patients = usePatientStore().patients;
     const loading = ref(true);
     const error = ref("");
-
-    const patients = ref<Patient[]>([]);
-
+    
     onMounted(async () => {
         try {
             patients.value = await secretariaService.getPatients();
@@ -25,7 +25,6 @@
         } finally {
             loading.value = false;
         }
-        console.log(error);
     });
 </script>
 
@@ -44,7 +43,7 @@
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody v-for="patient in patients" :key="patient.id">
+            <tbody v-for="patient in patients.value" :key="patient.id">
                 <QueueItem
                     :id="patient.id"
                     :name="patient.attributes.name"

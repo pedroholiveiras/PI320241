@@ -3,34 +3,30 @@
     import {isAxiosError} from "axios";
     import {useRouter} from "vue-router";
     import {authenticationService} from "@/api/AuthenticationService";
-    import {useUserStore} from "@/stores/userStore";
 
-    const userStore = useUserStore();
+    const errorMessage = ref("");
+    const submitted = ref(false);
     const router = useRouter();
 
     const cpf = ref("");
     const password = ref("");
-    
-    const submitted = ref(false);
-    const errorMessage = ref("");
 
     async function authenticate() {
         submitted.value = true;
 
         try {
             const user = await authenticationService.login(cpf.value, password.value);
-
-            if (user.role == "admin")
+            if (user.role.name == "Authenticated") {
                 router.push("/");
-            else
+            } else {
                 router.push("/login");
+            }
         } catch(e) {
             if(isAxiosError(e)) {
                 console.log(e.response?.data);
                 errorMessage.value = e.response?.data.error.message;
             }
         }
-        console.log(userStore.user.username);
     }
 </script>
 

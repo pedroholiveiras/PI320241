@@ -1,10 +1,12 @@
 <script setup lang="ts">
     import {ref, onMounted} from "vue";
     import {secretariaService} from "@/api/SecretariaService";
+    import {usePatientStore} from "@/stores/patientStore";
     import type {Patient, Procedure} from "@/types";
 
-    const procedures = ref<Procedure[]>([]);
     const patient = ref<Patient>({} as Patient);
+    const patients = ref<Patient[]>([]);
+    const procedures = ref<Procedure[]>([]);
 
     onMounted(async () => {
         procedures.value = await secretariaService.getProcedures();
@@ -25,14 +27,14 @@
             cpf,
             sus,
             phone,
-            parseInt(priority),
-            parseInt(procedure)
+            priority,
+            procedure
         );
     }
 </script>
 
 <template>
-    <div class="modal" id="patientRegisterModal" tabindex="-1" aria-labelledby="patientRegisterModal" aria-hidden="true">
+    <div class="modal" id="patientRegisterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="patientRegisterModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

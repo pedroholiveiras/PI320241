@@ -5,8 +5,8 @@
         cpf: string,
         sus: string,
         phone?: string,
-        priority: number,
-        status: number,
+        priority?: number,
+        status?: number,
         withdrawal?: Date,
         withdrawer?: string,
         procedure: Procedur1

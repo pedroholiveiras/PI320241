@@ -19,9 +19,9 @@ export type Procedure = {
 };
 
 export type User = {
-    id: number,
     jwt: string,
-    role: string
+    id: number,
     username: string,
     email: string
+    role: string
 };

@@ -22,7 +22,6 @@ class AuthenticationService {
 
         return user;
     }
-
     private async getRole(user: User) {
         const {data} = await api.get("/users/me", {
             headers: {
@@ -33,7 +32,7 @@ class AuthenticationService {
             }
         });
 
-        return data.role.type;
+        return data.role;
     }
 }
 

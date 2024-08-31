@@ -2,10 +2,8 @@ import {api} from "@/api";
 import type {Patient, Procedure} from "@/types";
 import {useUserStore} from "@/stores/userStore";
 
-const userStore = useUserStore;
-
 class SecretariaService {
-    constructor() {}
+    constructor() {};
 
     async getPatients(page = 1, pageSize = 24): Promise<Patient[]> {
         const {data} = await api.get("/patients?sort=id:desc", {
@@ -16,16 +14,16 @@ class SecretariaService {
 
         return data.data;
     };
-    
+
     async newPatient(
         name: string,
         cpf: string,
         sus: string,
         phone: string,
         priority: string,
-        status: string,
         procedure: number
     ): Promise<Patient> {
+        const userStore = useUserStore();
         const {data} = await api.post("/patients", {
             data: {
                 name: name,
@@ -33,8 +31,9 @@ class SecretariaService {
                 sus: sus,
                 phone: phone,
                 priority: phone,
-                status: status,
-                procedure: procedure
+                procedure: {
+                    connect: [procedure]
+                }
             }
         },
         {
@@ -58,6 +57,7 @@ class SecretariaService {
         withdrawer?: string,
         procedure: Procedure
     ): Promise<Patient> {
+        const userStore = useUserStore();
         const {data} = await api.put(`/patients/${id}`, {
             data: {
                 name: name,
