@@ -33,6 +33,8 @@
             procedure
         );
         patient.attributes = patient.value;
+        patient.attributes.procedure.attributes.name = "eu ae";
+        console.log(patient.attributes);
         patients.value.unshift(patient);
     }
 </script>
