@@ -8,7 +8,7 @@
     import Filter from "@/components/Filter.vue";
     import QueueItem from "@/components/QueueItem.vue";
     import PatientRegisterModal from "@/components/PatientRegisterModal.vue";
-  
+
     const patients = usePatientStore().patients;
     const loading = ref(true);
     const error = ref("");

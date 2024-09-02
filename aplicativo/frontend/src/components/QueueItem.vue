@@ -9,7 +9,7 @@
         status?: number,
         withdrawal?: Date,
         withdrawer?: string,
-        procedure: Procedur1
+        procedure: Procedure
     }>();
 </script>
 
@@ -17,7 +17,7 @@
     <tr>
         <td>{{name}}</td>
         <td style="font-family: monospace">{{cpf}}</td>
-        <td>{{procedure.attributes.name}}</td>
+        <!--<td>{{procedure.attributes.name}}</td>-->
         <td class="text-center">
             <button type="button" class="btn btn-primary">
                 <i class="bi bi-eye"></i>

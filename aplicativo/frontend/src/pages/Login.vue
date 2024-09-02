@@ -36,7 +36,7 @@
             <h1 class="my-4">Entrar</h1>
             <form novalidate @submit.prevent="authenticate" :class="{'was-validated': submitted}">
                 <div class="mb-3">
-                    <label for="cpfInput" class="form-label">E-mail</label>
+                    <label for="cpfInput" class="form-label">E-mail<span class="req">*</span></label>
                     <input
                         v-model="cpf"
                         type="text"
@@ -46,7 +46,7 @@
                     >
                 </div>
                 <div class="mb-4">
-                    <label for="passwordInput" class="form-label">Senha</label>
+                    <label for="passwordInput" class="form-label">Senha<span class="req">*</span></label>
                     <input
                         v-model="password"
                         type="password"
@@ -69,9 +69,13 @@
     </div>
 </template>
 
-<style scope>
+<style>
     .card {
         max-width: 512px !important;
-        margin: auto
+        margin: auto;
+    }
+    .req{
+        color: red;
+        margin-left: 2px;
     }
 </style>
