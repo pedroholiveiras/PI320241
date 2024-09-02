@@ -1,5 +1,13 @@
 # Notas
 
+## 02/09/2024 14:14
+
+* Em telas pequenas: item da lista → cartão
+* Falta
+    * Pesquisa
+    * Filtro
+    * Atualizar fila localmente ao atualizar/adicionar paciente
+
 ## 13/08/2024 15:16
 
 ### Componentes
