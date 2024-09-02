@@ -50,7 +50,7 @@ class SecretariaService {
         name: string,
         cpf: string,
         sus: string,
-        phone?: string,
+        phone: string,
         priority: string,
         status: string,
         withdrawal?: Date,
@@ -58,26 +58,42 @@ class SecretariaService {
         procedure: Procedure
     ): Promise<Patient> {
         const userStore = useUserStore();
-        const {data} = await api.put(`/patients/${id}`, {
-            data: {
-                name: name,
-                cpf: cpf,
-                sus: sus,
-                phone: phone,
-                priority: phone,
-                status: status,
-                procedure: procedure.id
-            }
-        },
-        {
-            headers: {
-                Authorization: `Bearer ${userStore.token}`
-            }
-        });
-
-        return data.data;
+    
+        // Preparando payload com checagem de tipos
+        const payload: any = {
+            name: name,
+            cpf: cpf,
+            sus: sus,
+            phone: phone,
+            priority: priority !== '' ? parseInt(priority, 10) : undefined, // Convertendo para número
+            status: status !== '' ? parseInt(status, 10) : undefined, // Convertendo para número
+            procedure: procedure.id
+        };
+    
+        // Adicionando campos opcionais apenas se existirem
+        if (withdrawal) payload.withdrawal = withdrawal;
+        if (withdrawer) payload.withdrawer = withdrawer;
+    
+        console.log('Dados enviados para a API:', payload);
+    
+        try {
+            const {data} = await api.put(`/patients/${id}`, {
+                data: payload
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${userStore.token}`
+                }
+            });
+    
+            return data.data;
+        } catch (error) {
+            console.error('Erro na API:', error);
+            throw error; // Re-throw o erro para ser capturado no componente
+        }
     }
 
+    
     async getProcedures(page = 1, pageSize = 24): Promise<Procedure[]> {
         const {data} = await api.get("/procedures");
 
