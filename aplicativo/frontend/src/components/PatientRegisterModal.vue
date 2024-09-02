@@ -5,11 +5,13 @@
     import type {Patient, Procedure} from "@/types";
 
     const patient = ref<Patient>({} as Patient);
-    const patients = ref<Patient[]>([]);
+    const patients = usePatientStore().patients;
     const procedures = ref<Procedure[]>([]);
 
     onMounted(async () => {
         procedures.value = await secretariaService.getProcedures();
+        patients.value = await secretariaService.getPatients();
+        console.log(patients.value);
     });
 
     async function newPatient() {
@@ -30,6 +32,8 @@
             priority,
             procedure
         );
+        patient.attributes = patient.value;
+        patients.value.unshift(patient);
     }
 </script>
 
@@ -43,23 +47,23 @@
                 <div class="modal-body">
                     <form>
                         <div class="col mb-3">
-                            <label for="patientFirstName" class="form-label">Nome</label>
+                            <label for="patientFirstName" class="form-label">Nome<span class="req">*</span></label>
                             <input type="text" class="form-control" id="patientName" v-model="patient.name">
                         </div>
                         <div class="container p-0">
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="patientCPF" class="form-label">CPF</label>
+                                    <label for="patientCPF" class="form-label">CPF<span class="req">*</span></label>
                                     <input type="text" class="form-control" id="patientCPF" v-model="patient.cpf">
                                 </div>
                                 <div class="col mb-3">
-                                    <label for="patientSUS" class="form-label">Número do SUS</label>
+                                    <label for="patientSUS" class="form-label">Número do SUS<span class="req">*</span></label>
                                     <input type="text" class="form-control" id="patientSUS" v-model="patient.sus">
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="patientLastName" class="form-label">Procedimento</label>
+                            <label for="patientLastName" class="form-label">Procedimento<span class="req">*</span></label>
                             <select class="form-select" aria-label="Procedimento" v-model="patient.procedure">
                                 <option v-for="procedure in procedures" :key="procedures.id" :value="procedure.id">
                                     {{procedure.attributes.name}} ({{procedure.attributes.address}})
@@ -67,7 +71,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="patientLastName" class="form-label">Prioridade</label>
+                            <label for="patientLastName" class="form-label">Prioridade<span class="req">*</span></label>
                             <select class="form-select" aria-label="Prioridade" v-model="patient.priority">
                                 <option value="0">Baixa</option>
                                 <option value="1">Média</option>

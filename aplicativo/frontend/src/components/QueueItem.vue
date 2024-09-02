@@ -1,4 +1,5 @@
 <script setup lang="ts">
+<<<<<<< HEAD
 import { ref, onMounted } from 'vue';
 import { secretariaService } from '@/api/SecretariaService';
 import type { Procedure } from "@/types";
@@ -143,4 +144,31 @@ onMounted(async () => {
       </div>
     </div>
   </div>
+=======
+    const props = defineProps<{
+        id: number,
+        name: string,
+        cpf: string,
+        sus: string,
+        phone?: string,
+        priority?: number,
+        status?: number,
+        withdrawal?: Date,
+        withdrawer?: string,
+        procedure: Procedure
+    }>();
+</script>
+
+<template>
+    <tr>
+        <td>{{name}}</td>
+        <td style="font-family: monospace">{{cpf}}</td>
+        <!--<td>{{procedure.attributes.name}}</td>-->
+        <td class="text-center">
+            <button type="button" class="btn btn-primary">
+                <i class="bi bi-eye"></i>
+            </button>
+        </td>
+    </tr>
+>>>>>>> 28e4072262ba3fabfe2f2c621d1225cc7d12d4b9
 </template>
