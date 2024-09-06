@@ -30,7 +30,7 @@ class SecretariaService {
                 cpf: cpf,
                 sus: sus,
                 phone: phone,
-                priority: phone,
+                priority: priority,
                 procedure: {
                     connect: [procedure]
                 }

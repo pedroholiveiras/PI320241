@@ -31,7 +31,7 @@
 </script>
 
 <template>
-    <div class="card mt-4">
+    <div class="card mt-4 login">
         <div class="card-body mx-2">
             <h1 class="my-4">Entrar</h1>
             <form novalidate @submit.prevent="authenticate" :class="{'was-validated': submitted}">
@@ -70,7 +70,7 @@
 </template>
 
 <style>
-    .card {
+    .login {
         max-width: 512px !important;
         margin: auto;
     }

@@ -11,7 +11,6 @@
     onMounted(async () => {
         procedures.value = await secretariaService.getProcedures();
         patients.value = await secretariaService.getPatients();
-        console.log(patients.value);
     });
 
     async function newPatient() {
@@ -32,19 +31,27 @@
             priority,
             procedure
         );
+
         patient.attributes = patient.value;
-        patient.attributes.procedure.attributes.name = "eu ae";
-        console.log(patient.attributes);
+        let proc = procedures.value.find(p => p.id === patient.value.procedure).attributes;
+        patient.attributes.procedure = {
+            data: {
+                attributes: {
+                    name: proc.name,
+                    address: proc.address
+                }
+            }
+        }
         patients.value.unshift(patient);
     }
 </script>
 
 <template>
     <div class="modal" id="patientRegisterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="patientRegisterModal" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="patientRegisterModal">Cadastrar paciente</h1>
+                    <h1 class="modal-title fs-5" id="patientRegisterModalLabel">Cadastrar paciente</h1>
                 </div>
                 <div class="modal-body">
                     <form>
