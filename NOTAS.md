@@ -1,5 +1,14 @@
 # Notas
 
+## 07/09/2024 09:56
+
+### Para segunda
+
+* Remover paciente
+* Cores dos cards por prioridade
+* Filtro
+* Atualizar paciente
+
 ## 02/09/2024 14:14
 
 * Em telas pequenas: item da lista → cartão
