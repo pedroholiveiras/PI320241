@@ -1,5 +1,11 @@
 <script setup lang="ts">
     import PatientRegisterModal from "@/components/PatientRegisterModal.vue";
+    import {ref} from "vue";
+    import {usePatientStore} from "@/stores/patientStore";
+    import type {Patient, Procedure} from "@/types";
+
+    const patient = ref<Patient>({} as Patient);
+    const patients = usePatientStore().patients;
 </script>
 
 <template>
@@ -11,10 +17,9 @@
             <input type="text" class="form-control" placeholder="Pesquisar" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
         </div>
         <button
+            @click="teste"
             class="btn btn-outline-primary me-2"
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#patientRegisterModal">
+            type="button">
             <i class="bi bi-filter"></i>
         </button>
         <button

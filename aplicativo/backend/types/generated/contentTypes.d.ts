@@ -389,7 +389,7 @@ export interface ApiPatientPatient extends Schema.CollectionType {
       Attribute.SetMinMax<
         {
           min: 0;
-          max: 2;
+          max: 3;
         },
         number
       >;

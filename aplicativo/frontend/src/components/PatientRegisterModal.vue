@@ -10,9 +10,8 @@
 
     onMounted(async () => {
         procedures.value = await secretariaService.getProcedures();
-        patients.value = await secretariaService.getPatients();
     });
-
+    
     async function newPatient() {
         const {
             name,
@@ -31,9 +30,10 @@
             priority,
             procedure
         );
+        /*
+        let proc = procedures.value.find(p => p.id === patient.value.procedure).attributes;
 
         patient.attributes = patient.value;
-        let proc = procedures.value.find(p => p.id === patient.value.procedure).attributes;
         patient.attributes.procedure = {
             data: {
                 attributes: {
@@ -42,7 +42,11 @@
                 }
             }
         }
+        
         patients.value.unshift(patient);
+        */
+        patient.value = {} as Patient;
+        patients.value = await secretariaService.getPatients();
     }
 </script>
 
@@ -80,12 +84,21 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="patientLastName" class="form-label">Prioridade<span class="req">*</span></label>
-                            <select class="form-select" aria-label="Prioridade" v-model="patient.priority">
-                                <option value="0">Baixa</option>
-                                <option value="1">Média</option>
-                                <option value="2">Alta</option>
-                            </select>
+                            <label for="patientPriority" class="form-label">Prioridade<span class="req">*</span></label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="patientPriority" id="patientPrio1" value="1" v-model="patient.priority">
+                                    <label class="form-check-label" for="patientPrio1">Baixa</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="patientPriority" id="patientPrio2" value="2" v-model="patient.priority">
+                                    <label class="form-check-label" for="patientPrio2">Média</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="patientPriority" id="patientPrio3" value="3" v-model="patient.priority">
+                                    <label class="form-check-label" for="patientPrio3">Alta</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="patientPhone" class="form-label">Telefone</label>
@@ -98,12 +111,12 @@
                         Cancelar
                     </button>
                     <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-bs-dismiss="modal"
-                        @click="newPatient"
-                        :disabled="!(patient.name && patient.cpf && patient.sus && patient.procedure && patient.priority)"
-                        > Salvar
+                            type="button"
+                            class="btn btn-primary"
+                            data-bs-dismiss="modal"
+                            @click="newPatient"
+                            :disabled="!(patient.name && patient.cpf && patient.sus && patient.procedure && patient.priority)"
+                            > Salvar
                     </button>
                 </div>
             </div>

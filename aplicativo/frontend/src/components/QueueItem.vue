@@ -11,7 +11,7 @@
 
 <template>
     <PatientDetailsModal :patient="patient"></PatientDetailsModal>
-    <div class="container card mb-2">
+    <div :class="'container card mb-2 shadow-sm prio' + patient.attributes.priority">
         <div
             type="button" 
             class="text-primary z-3 position-absolute mt-2 align-self-end"
@@ -68,5 +68,21 @@
     }
     .mono {
         font-family: monospace;
+    }
+    .prio0 {
+        border: rgb(0, 0, 255, .25) solid 1px;
+        background: rgb(0, 0, 255, .05)
+    }
+    .prio1 {
+        border: rgb(0, 255, 0, .25) solid 1px;
+        background: rgb(0, 255, 0, .05)
+    }
+    .prio2 {
+        border: rgb(255, 255, 0, .5) solid 1px;
+        background: rgb(255, 255, 0, .1)
+    }
+    .prio3 {
+        border: rgb(255, 0, 0, .25) solid 1px;
+        background: rgb(255, 0, 0, .05)
     }
 </style>
