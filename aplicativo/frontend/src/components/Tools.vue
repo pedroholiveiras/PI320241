@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import PatientRegisterModal from "@/components/PatientRegisterModal.vue";
+    import FilterModal from "@/components/FilterModal.vue";
     import {ref} from "vue";
     import {usePatientStore} from "@/stores/patientStore";
     import type {Patient, Procedure} from "@/types";
@@ -9,6 +10,8 @@
 </script>
 
 <template>
+    <FilterModal></FilterModal>
+    <PatientRegisterModal></PatientRegisterModal>
     <div class="d-flex">
         <div class="input-group me-2">
             <span class="input-group-text" id="button-addon1">
@@ -17,9 +20,11 @@
             <input type="text" class="form-control" placeholder="Pesquisar" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
         </div>
         <button
-            @click="teste"
             class="btn btn-outline-primary me-2"
-            type="button">
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#filterModal"
+            @click="teste">
             <i class="bi bi-filter"></i>
         </button>
         <button
@@ -30,7 +35,6 @@
             Cadastrar paciente
         </button>
     </div>
-    <PatientRegisterModal></PatientRegisterModal>
 </template>
 
 <style scoped>

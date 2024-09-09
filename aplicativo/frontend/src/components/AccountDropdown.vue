@@ -6,7 +6,7 @@
 
 <template>
     <div class="dropdown">
-        <button class="btn btn-light dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-outline-primary dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Conta
         </button>
         <ul class="dropdown-menu dropdown-menu-end">

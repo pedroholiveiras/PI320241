@@ -52,6 +52,38 @@ class SecretariaService {
         sus: string,
         phone: string,
         priority: string,
+        status: number,
+        procedure: number
+    ): Promise<Patient> {
+        const userStore = useUserStore();
+        const {data} = await api.put(`/patients/${id}`, {
+            data: {
+                name: name,
+                cpf: cpf,
+                sus: sus,
+                phone: phone,
+                priority: priority,
+                procedure: {
+                    connect: [procedure]
+                }
+            }
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${userStore.token}`
+            }    
+        });
+
+        return data.data;
+    }
+/*
+    async updatePatient(
+        id: number,
+        name: string,
+        cpf: string,
+        sus: string,
+        phone: string,
+        priority: string,
         status: string,
         withdrawal?: Date,
         withdrawer?: string,
@@ -92,7 +124,7 @@ class SecretariaService {
             throw error; // Re-throw o erro para ser capturado no componente
         }
     }
-
+    */
     
     async getProcedures(page = 1, pageSize = 24): Promise<Procedure[]> {
         const {data} = await api.get("/procedures");
@@ -100,6 +132,17 @@ class SecretariaService {
         return data.data;
     };
     
+    async removePatient(id: number): Promise<Patient> {
+        const userStore = useUserStore();
+
+        const {data} = await api.delete(`/patients/${id}`,{
+            headers: {
+                Authorization: `Bearer ${userStore.token}`
+            }
+        });
+
+        return data.data;
+    }
 }
 
 export const secretariaService = new SecretariaService();

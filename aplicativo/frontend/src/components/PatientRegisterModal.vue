@@ -30,23 +30,13 @@
             priority,
             procedure
         );
-        /*
-        let proc = procedures.value.find(p => p.id === patient.value.procedure).attributes;
 
-        patient.attributes = patient.value;
-        patient.attributes.procedure = {
-            data: {
-                attributes: {
-                    name: proc.name,
-                    address: proc.address
-                }
-            }
-        }
-        
-        patients.value.unshift(patient);
-        */
         patient.value = {} as Patient;
         patients.value = await secretariaService.getPatients();
+    }
+
+    function clearForm() {
+        patient.value = {} as Patient;
     }
 </script>
 
@@ -58,7 +48,6 @@
                     <h1 class="modal-title fs-5" id="patientRegisterModalLabel">Cadastrar paciente</h1>
                 </div>
                 <div class="modal-body">
-                    <form>
                         <div class="col mb-3">
                             <label for="patientFirstName" class="form-label">Nome<span class="req">*</span></label>
                             <input type="text" class="form-control" id="patientName" v-model="patient.name">
@@ -84,19 +73,20 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="patientPriority" class="form-label">Prioridade<span class="req">*</span></label>
-                            <div>
+                            <label for="patientRegisterPriority" class="form-label">Prioridade<span class="req">*</span></label>
+                            <div id="patientRegisterPriority">
+                                {{typeof(patient.priority)}}
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="patientPriority" id="patientPrio1" value="1" v-model="patient.priority">
-                                    <label class="form-check-label" for="patientPrio1">Baixa</label>
+                                    <input class="form-check-input" type="radio" name="patientRegisterPriority" id="patientRegisterPrio1" value="1" v-model="patient.priority">
+                                    <label class="form-check-label" for="patientRegisterPrio1">Baixa</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="patientPriority" id="patientPrio2" value="2" v-model="patient.priority">
-                                    <label class="form-check-label" for="patientPrio2">Média</label>
+                                    <input class="form-check-input" type="radio" name="patientRegisterPriority" id="patientRegisterPrio2" value="2" v-model="patient.priority">
+                                    <label class="form-check-label" for="patientRegisterPrio2">Média</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="patientPriority" id="patientPrio3" value="3" v-model="patient.priority">
-                                    <label class="form-check-label" for="patientPrio3">Alta</label>
+                                    <input class="form-check-input" type="radio" name="patientRegisterPriority" id="patientRegisterPrio3" value="3" v-model="patient.priority">
+                                    <label class="form-check-label" for="patientRegisterPrio3">Alta</label>
                                 </div>
                             </div>
                         </div>
@@ -104,19 +94,22 @@
                             <label for="patientPhone" class="form-label">Telefone</label>
                             <input type="text" class="form-control" id="patientPhone" v-model="patient.phone">
                         </div>
-                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Cancelar
+                    <button
+                        type="button"
+                        class="btn btn-outline-primary"
+                        data-bs-dismiss="modal"
+                        @click="clearForm"
+                        > Cancelar
                     </button>
                     <button
-                            type="button"
-                            class="btn btn-primary"
-                            data-bs-dismiss="modal"
-                            @click="newPatient"
-                            :disabled="!(patient.name && patient.cpf && patient.sus && patient.procedure && patient.priority)"
-                            > Salvar
+                        type="button"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        @click="newPatient"
+                        :disabled="!(patient.name && patient.cpf && patient.sus && patient.procedure && patient.priority)"
+                        > Salvar
                     </button>
                 </div>
             </div>

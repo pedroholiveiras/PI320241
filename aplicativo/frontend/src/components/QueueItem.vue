@@ -2,23 +2,15 @@
     import {ref} from "vue";
     import type {Patient} from "@/types";
     import PatientDetailsModal from "@/components/PatientDetailsModal.vue";
-
-    const selectedPatient = ref<Patient>({} as Patient);
+    
     const props = defineProps<{
         patient: Patient
     }>();
 </script>
 
 <template>
-    <PatientDetailsModal :patient="patient"></PatientDetailsModal>
+    <PatientDetailsModal :selectedPatient="patient"></PatientDetailsModal>
     <div :class="'container card mb-2 shadow-sm prio' + patient.attributes.priority">
-        <div
-            type="button" 
-            class="text-primary z-3 position-absolute mt-2 align-self-end"
-            data-bs-toggle="modal"
-            data-bs-target="#patientDetailsModal"
-            ><i class="bi bi-pencil-square"/>
-        </div>
         <div class="row p-2 mt-2">
             <div class="col-md-4">
                 <h6>Nome</h6>
@@ -53,6 +45,13 @@
                     <div v-else class="mb-2 mono">—</div>
                 </div>
             </div>
+        </div>
+        <div
+            type="button" 
+            class="text-primary z-3 position-absolute mt-2 align-self-end"
+            data-bs-toggle="modal"
+            :data-bs-target="'#patientDetailsModal' + patient.id"
+            ><i class="bi bi-pencil-square"/>
         </div>
     </div>
 </template>
