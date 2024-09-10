@@ -4,7 +4,8 @@
     import {usePatientStore} from "@/stores/patientStore";
     import {isAxiosError} from "axios";
     import type {Patient, Procedure} from "@/types";
-   
+    import PatientRemove from "@/components/PatientRemove.vue";
+
     const props = defineProps<{
         selectedPatient: Patient
     }>();
@@ -12,19 +13,21 @@
     const patients = usePatientStore().patients;
     const procedures = ref<Procedure[]>([]);
     const patient = ref<Patient>({} as Patient);
-    
+
+    const remover = ref(0);
+
     // Carrega os procedimentos disponíveis ao montar o componente
     onBeforeMount(async () => {
         patient.value = {...props.selectedPatient};
-        console.log(patient.value.attributes.priority);
+
         try {
             procedures.value = await secretariaService.getProcedures();
         } catch (error) {
             console.error('Erro ao carregar procedimentos:', error);
         }
     });
-
     async function updatePatient() {
+
         try {
             const updatedPatient = await secretariaService.updatePatient(
                 patient.value.id,
@@ -34,7 +37,9 @@
                 patient.value.attributes.phone,
                 patient.value.attributes.priority,
                 patient.value.attributes.status,
-                patient.value.attributes.procedure.data.id
+                patient.value.attributes.procedure.data.id,
+                patient.value.attributes.withdrawal,
+                patient.value.attributes.withdrawer
             );
         } catch (error) {
             if (isAxiosError(error)) {
@@ -47,12 +52,13 @@
     }
 
     async function resetPatient() {
-        patient.value = {...props.selectedPatient};
+        patient.value = props.selectedPatient;
     }
 
     async function removePatient() {
-        await secretariaService.removePatient(props.patient.id);
+        await secretariaService.removePatient(props.selectedPatient.id);
         patients.value = await secretariaService.getPatients();
+        remover.value = 0;
     }
 </script>
 
@@ -110,8 +116,8 @@
                         <input type="text" class="form-control" id="patientPhone" v-model="patient.attributes.phone">
                     </div>
                     <div class="mb-3">
-                        <label for="patientPhone" class="form-label">Data de retirada</label>
-                        <input type="text" class="form-control" id="patientPhone" v-model="patient.attributes.withdrawal">
+                        <label for="patientPhone" class="form-label">Data de retirada {{}}</label>
+                        <input type="date" class="form-control" id="patientPhone" v-model="patient.attributes.withdrawal">
                     </div>
                     <div class="mb-3">
                         <label for="patientPhone" class="form-label">Quem retirou</label>
@@ -119,21 +125,40 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button
-                        class="btn btn-outline-danger me-2"
-                        type="button"
-                        data-bs-dismiss="modal"
-                        @click="removePatient">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-outline-primary"
-                        data-bs-dismiss="modal"
-                        @click="resetPatient"
-                        >Fechar
-                    </button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="updatePatient">Salvar alterações</button>
+                    <div v-if="remover">
+                        <span class="me-2">
+                            Remover paciente? 
+                        </span>
+                        <button
+                            class="btn btn-outline-danger me-2"
+                            type="button"
+                            data-bs-dismiss="modal"
+                            @click="removePatient"
+                            > Sim
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-outline-primary me-2"
+                            @click="remover = 0"
+                            > Não
+                        </button>
+                    </div>
+                    <div v-else>
+                        <button
+                            class="btn btn-outline-danger me-2"
+                            type="button"
+                            @click="remover = 1"
+                            ><i class="bi bi-trash"></i>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-outline-primary me-2"
+                            data-bs-dismiss="modal"
+                            @click="resetPatient"
+                            >Fechar
+                        </button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="updatePatient">Salvar alterações</button>
+                    </div>
                 </div>
             </div>
         </div>

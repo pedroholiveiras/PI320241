@@ -53,7 +53,9 @@ class SecretariaService {
         phone: string,
         priority: string,
         status: number,
-        procedure: number
+        procedure: number,
+        withdrawal: Date,
+        withdrawer: string
     ): Promise<Patient> {
         const userStore = useUserStore();
         const {data} = await api.put(`/patients/${id}`, {

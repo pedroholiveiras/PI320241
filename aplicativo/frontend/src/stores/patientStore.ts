@@ -4,5 +4,6 @@ import {type Patient} from "@/types";
 
 export const usePatientStore = defineStore("patient", () => {
     const patients = ref<Patient[]>([]);
-    return {patients};
+    const selected = ref([]);
+    return {patients, selected};
 });
