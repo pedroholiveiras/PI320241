@@ -5,7 +5,7 @@
     import type {Patient, Procedure} from "@/types";
 
     const patient = ref<Patient>({} as Patient);
-    const patients = usePatientStore().patients;
+    const filteredPatients = usePatientStore().filteredPatients;
     const procedures = ref<Procedure[]>([]);
 
     onMounted(async () => {
@@ -32,7 +32,7 @@
         );
 
         patient.value = {} as Patient;
-        patients.value = await secretariaService.getPatients();
+        filteredPatients.value = await secretariaService.getPatients();
     }
 
     function clearForm() {
@@ -75,7 +75,6 @@
                         <div class="mb-3">
                             <label for="patientRegisterPriority" class="form-label">Prioridade<span class="req">*</span></label>
                             <div id="patientRegisterPriority">
-                                {{typeof(patient.priority)}}
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="patientRegisterPriority" id="patientRegisterPrio1" value="1" v-model="patient.priority">
                                     <label class="form-check-label" for="patientRegisterPrio1">Baixa</label>

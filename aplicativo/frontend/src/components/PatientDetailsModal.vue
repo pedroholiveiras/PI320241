@@ -10,25 +10,30 @@
         selectedPatient: Patient
     }>();
 
-    const patients = usePatientStore().patients;
+    const filteredPatients = usePatientStore().filteredPatients;
     const procedures = ref<Procedure[]>([]);
     const patient = ref<Patient>({} as Patient);
 
     const remover = ref(0);
 
-    // Carrega os procedimentos disponíveis ao montar o componente
     onBeforeMount(async () => {
-        patient.value = {...props.selectedPatient};
+        patient.value = JSON.parse(JSON.stringify(props.selectedPatient));
+        const prcd = ref(patient.value);
 
         try {
             procedures.value = await secretariaService.getProcedures();
         } catch (error) {
-            console.error('Erro ao carregar procedimentos:', error);
+            console.error("Erro ao carregar procedimentos:", error);
         }
     });
-    async function updatePatient() {
 
+    async function updatePatient() {
         try {
+            for (let p of filteredPatients.value)
+                if (p.id == patient.value.id)
+                    p.attributes = patient.value.attributes;
+            patient.value = JSON.parse(JSON.stringify(props.selectedPatient));
+
             const updatedPatient = await secretariaService.updatePatient(
                 patient.value.id,
                 patient.value.attributes.name,
@@ -41,24 +46,26 @@
                 patient.value.attributes.withdrawal,
                 patient.value.attributes.withdrawer
             );
+
         } catch (error) {
             if (isAxiosError(error)) {
                 console.log(error.response?.data);
             }
-            console.error('Erro ao atualizar o paciente:', error);
-            alert('Erro ao atualizar o paciente.');
+            console.error("Erro ao atualizar o paciente:", error);
+            alert("Erro ao atualizar o paciente.");
         }
-        patients.value = await secretariaService.getPatients();
     }
 
     async function resetPatient() {
-        patient.value = props.selectedPatient;
+        patient.value = JSON.parse(JSON.stringify(props.selectedPatient));
     }
 
     async function removePatient() {
+        filteredPatients.value = filteredPatients.value.filter(
+            p => p.id != patient.value.id
+        );
+
         await secretariaService.removePatient(props.selectedPatient.id);
-        patients.value = await secretariaService.getPatients();
-        remover.value = 0;
     }
 </script>
 
@@ -92,22 +99,23 @@
                     </div>
                     <div class="mb-3">
                         <label for="patientUpdatePriority" class="form-label">Prioridade<span class="req">*</span></label>
+                        {{typeof(patient.attributes.priority)}}
                         <div id="patientUpdatePriority">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="patientUpdatePriority" id="patientUpdatePrio0" value="0" v-model="patient.attributes.priority">
-                                <label class="form-check-label" for="patientUpdatePrio0">Concluído</label>
+                                <input class="form-check-input" type="radio" name="patientUpdatePriority" :id="'patientUpdatePrio0' + patient.id" :value="0" v-model="patient.attributes.priority">
+                                <label class="form-check-label" :for="'patientUpdatePrio0' + patient.id">Concluído</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="patientUpdatePriority" id="patientUpdatePrio1" value="1" v-model="patient.attributes.priority">
-                                <label class="form-check-label" for="patientUpdatePrio1">Baixa</label>
+                                <input class="form-check-input" type="radio" name="patientUpdatePriority" :id="'patientUpdatePrio1' + patient.id" :value="1" v-model="patient.attributes.priority">
+                                <label class="form-check-label" :for="'patientUpdatePrio1' + patient.id">Baixa</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="patientUpdatePriority" id="patientUpdatePrio2" value="2" v-model="patient.attributes.priority">
-                                <label class="form-check-label" for="patientUpdatePrio2">Média</label>
+                                <input class="form-check-input" type="radio" name="patientUpdatePriority" :id="'patientUpdatePrio2' + patient.id" :value="2" v-model="patient.attributes.priority">
+                                <label class="form-check-label" :for="'patientUpdatePrio2' + patient.id">Média</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="patientUpdatePriority" id="patientUpdatePrio3" value="3" v-model="patient.attributes.priority">
-                                <label class="form-check-label" for="patientUpdatePrio3">Alta</label>
+                                <input class="form-check-input" type="radio" name="patientUpdatePriority" :id="'patientUpdatePrio3' + patient.id" :value="3" v-model="patient.attributes.priority">
+                                <label class="form-check-label" :for="'patientUpdatePrio3' + patient.id">Alta</label>
                             </div>
                         </div>
                     </div>
@@ -126,21 +134,19 @@
                 </div>
                 <div class="modal-footer">
                     <div v-if="remover">
-                        <span class="me-2">
-                            Remover paciente? 
-                        </span>
+                        <span class="me-2">Remover paciente?</span>
                         <button
                             class="btn btn-outline-danger me-2"
                             type="button"
                             data-bs-dismiss="modal"
                             @click="removePatient"
-                            > Sim
+                            >Sim
                         </button>
                         <button
                             type="button"
                             class="btn btn-outline-primary me-2"
                             @click="remover = 0"
-                            > Não
+                            >Não
                         </button>
                     </div>
                     <div v-else>
@@ -157,7 +163,13 @@
                             @click="resetPatient"
                             >Fechar
                         </button>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="updatePatient">Salvar alterações</button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            data-bs-dismiss="modal"
+                            @click="updatePatient"
+                            >Salvar alterações
+                        </button>
                     </div>
                 </div>
             </div>

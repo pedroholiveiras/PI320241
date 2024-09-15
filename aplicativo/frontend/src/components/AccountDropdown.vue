@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import {useUserStore} from "@/stores/userStore";
-
     const userStore = useUserStore();
 </script>
 
@@ -11,13 +10,18 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
             <li>
+                <a class="dropdown-item" href="#" @click="userStore.logout">
+                    Procedimentos
+                </a>
+            </li>
+            <li><a class="dropdown-item" href="#" @click="userStore.logout">Sair</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
                 <span class="dropdown-item disabled">
                     Logado como:<br>
                     {{userStore.user.username}}
                 </span>
             </li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" @click="userStore.logout">Sair</a></li>
         </ul>
     </div>
 </template>

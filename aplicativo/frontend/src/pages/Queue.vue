@@ -2,7 +2,9 @@
     import {ref, onMounted} from "vue";
     import {secretariaService} from "@/api/SecretariaService";
     import {isAxiosError} from "axios";
+
     import {type Patient} from "@/types";
+
     import {usePatientStore} from "@/stores/patientStore";
 
     import Tools from "@/components/Tools.vue";
@@ -10,12 +12,14 @@
     import PatientRegisterModal from "@/components/PatientRegisterModal.vue";
 
     const patients = usePatientStore().patients;
+    const filteredPatients = usePatientStore().filteredPatients;
     const loading = ref(true);
     const error = ref("");
     
     onMounted(async () => {
         try {
             patients.value = await secretariaService.getPatients();
+            filteredPatients.value = patients.value;
         } catch(e) {
             if (isAxiosError(e)) {
                 error.value = e.response?.data.error.message;
@@ -35,7 +39,7 @@
         </div>
         <Tools></Tools>
         <div class="mt-2">
-            <div v-for="patient in patients.value" :key="patient.id">
+            <div v-for="patient in filteredPatients.value" :key="patient.id">
                 <QueueItem :patient="patient"></QueueItem>
             </div>
         </div>
