@@ -362,98 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiPatientPatient extends Schema.CollectionType {
-  collectionName: 'patients';
-  info: {
-    singularName: 'patient';
-    pluralName: 'patients';
-    displayName: 'Patient';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    cpf: Attribute.String & Attribute.Required;
-    sus: Attribute.String & Attribute.Required;
-    phone: Attribute.String;
-    withdrawal: Attribute.Date;
-    withdrawer: Attribute.String;
-    procedure: Attribute.Relation<
-      'api::patient.patient',
-      'manyToOne',
-      'api::procedure.procedure'
-    >;
-    priority: Attribute.Integer &
-      Attribute.SetMinMax<
-        {
-          min: 0;
-          max: 3;
-        },
-        number
-      >;
-    status: Attribute.Integer &
-      Attribute.SetMinMax<
-        {
-          min: 0;
-          max: 2;
-        },
-        number
-      >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::patient.patient',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::patient.patient',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiProcedureProcedure extends Schema.CollectionType {
-  collectionName: 'procedures';
-  info: {
-    singularName: 'procedure';
-    pluralName: 'procedures';
-    displayName: 'Procedure';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    address: Attribute.Enumeration<['Munic\u00EDpio', 'Policl\u00EDnica']>;
-    patients: Attribute.Relation<
-      'api::procedure.procedure',
-      'oneToMany',
-      'api::patient.patient'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::procedure.procedure',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::procedure.procedure',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -880,6 +788,98 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiPatientPatient extends Schema.CollectionType {
+  collectionName: 'patients';
+  info: {
+    singularName: 'patient';
+    pluralName: 'patients';
+    displayName: 'Patient';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    cpf: Attribute.String & Attribute.Required;
+    sus: Attribute.String & Attribute.Required;
+    phone: Attribute.String;
+    withdrawal: Attribute.Date;
+    withdrawer: Attribute.String;
+    procedure: Attribute.Relation<
+      'api::patient.patient',
+      'manyToOne',
+      'api::procedure.procedure'
+    >;
+    priority: Attribute.Integer &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+          max: 3;
+        },
+        number
+      >;
+    status: Attribute.Integer &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+          max: 2;
+        },
+        number
+      >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::patient.patient',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::patient.patient',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProcedureProcedure extends Schema.CollectionType {
+  collectionName: 'procedures';
+  info: {
+    singularName: 'procedure';
+    pluralName: 'procedures';
+    displayName: 'Procedure';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    address: Attribute.Enumeration<['Munic\u00EDpio', 'Policl\u00EDnica']>;
+    patients: Attribute.Relation<
+      'api::procedure.procedure',
+      'oneToMany',
+      'api::patient.patient'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::procedure.procedure',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::procedure.procedure',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -890,8 +890,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::patient.patient': ApiPatientPatient;
-      'api::procedure.procedure': ApiProcedureProcedure;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -900,6 +898,8 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::patient.patient': ApiPatientPatient;
+      'api::procedure.procedure': ApiProcedureProcedure;
     }
   }
 }
