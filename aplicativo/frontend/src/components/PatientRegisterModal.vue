@@ -5,6 +5,7 @@
     import type {Patient, Procedure} from "@/types";
 
     const patient = ref<Patient>({} as Patient);
+    const patients = usePatientStore().patients;
     const filteredPatients = usePatientStore().filteredPatients;
     const procedures = ref<Procedure[]>([]);
 
@@ -32,7 +33,8 @@
         );
 
         patient.value = {} as Patient;
-        filteredPatients.value = await secretariaService.getPatients();
+        patients.value = await secretariaService.getPatients();
+        filteredPatients.value = patients.value;
     }
 
     function clearForm() {

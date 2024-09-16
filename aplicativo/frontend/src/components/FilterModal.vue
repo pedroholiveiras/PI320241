@@ -11,12 +11,13 @@
     const filterOptions = ref({
         priorities: [],
         procedures: [],
-        order: true
+        order: false
     });
    
-    const temp = ref<Patient[]>([]);
 
     function filterPatients() {
+        const temp = ref<Patient[]>([]);
+
         filteredPatients.value = patients.value;
 
         if (filterOptions.value.order) {

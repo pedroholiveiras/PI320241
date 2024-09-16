@@ -14,7 +14,7 @@
 
     function search() {
         filteredPatients.value = patients.value.filter(p =>
-            p.attributes.name.includes(searchBar.value) ||
+            p.attributes.name.toLowerCase().includes(searchBar.value.toLowerCase()) ||
             p.attributes.cpf.includes(searchBar.value) ||
             p.attributes.sus.includes(searchBar.vaue)
         );
