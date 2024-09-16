@@ -6,17 +6,19 @@
     const props = defineProps<{
         patient: Patient
     }>();
+
+    const prioNames = ["Concluído", "Baixa", "Média", "Alta"];
 </script>
 
 <template>
     <PatientDetailsModal :selectedPatient="patient"></PatientDetailsModal>
     <div :class="'container card mb-2 shadow-sm prio' + patient.attributes.priority">
         <div class="row p-2 mt-2">
-            <div class="col-md-4">
+            <div class="col-md">
                 <h6>Nome</h6>
-                <div class="mb-2">{{patient.attributes.name}}</div>
+                <div class="mb-2 text-truncate">{{patient.attributes.name}}</div>
             </div>
-            <div class="col-md-4 row">
+            <div class="col-md row">
                 <div class="col">
                     <h6>CPF</h6>
                     <div class="mb-2 mono">{{patient.attributes.cpf}}</div>
@@ -26,7 +28,7 @@
                     <div class="mb-2 mono">{{patient.attributes.sus}}</div>
                 </div>
             </div>
-            <div class="col-md-4 row">
+            <div class="col-md row">
                 <div class="col">
                     <h6>Procedimento</h6>
                     <div class="mb-2">
@@ -40,9 +42,8 @@
                     </div>
                 </div>
                 <div class="col">
-                    <h6>Contato</h6>
-                    <div v-if="patient.attributes.phone" class="mb-2 mono">{{patient.attributes.phone}}</div>
-                    <div v-else class="mb-2 mono">—</div>
+                    <h6>Prioridade</h6>
+                    <div class="mb-2">{{prioNames[patient.attributes.priority]}}</div>
                 </div>
             </div>
         </div>

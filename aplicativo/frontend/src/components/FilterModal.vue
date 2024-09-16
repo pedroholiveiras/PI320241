@@ -10,13 +10,28 @@
 
     const filterOptions = ref({
         priorities: [],
-        procedures: []
+        procedures: [],
+        order: true
     });
-    
+   
+    const temp = ref<Patient[]>([]);
+
     function filterPatients() {
         filteredPatients.value = patients.value;
 
-        filteredPatients.value = patients.value.filter(
+        if (filterOptions.value.order) {
+            for (let i = 3; i >= 0; i--) {
+                for (const p of patients.value) {
+                    if (p.attributes.priority == i) {
+                        temp.value.push(p);
+                    }
+                }
+            }
+
+            filteredPatients.value = temp.value;
+        }
+    
+        filteredPatients.value = filteredPatients.value.filter(
             p => filterOptions.value.priorities.includes(
                 p.attributes.priority
             )
@@ -42,6 +57,11 @@
                     <h1 class="modal-title fs-5" id="filterModalLabel">Filtrar resultados</h1>
                 </div>
                 <div class="modal-body">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="order" id="order" :value="0" v-model="filterOptions.order">
+                        <label class="form-check-label" for="order">Ordenar por prioridade</label>
+                    </div>
+
                     <div class="col mb-3">
                         <label for="filterPriority" class="form-label">Prioridade</label>
                         <div id="filterPriority">

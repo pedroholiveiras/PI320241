@@ -67,7 +67,9 @@ class SecretariaService {
                 priority: priority,
                 procedure: {
                     connect: [procedure]
-                }
+                },
+                withdrawal: withdrawal,
+                withdrawer: withdrawer
             }
         },
         {

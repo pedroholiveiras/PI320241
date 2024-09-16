@@ -28,6 +28,8 @@
     });
 
     async function updatePatient() {
+        if (patient.value.attributes.priority == -1)
+            patient.value.attributes.priority = 0;
         try {
             for (let p of filteredPatients.value)
                 if (p.id == patient.value.id)
@@ -99,10 +101,9 @@
                     </div>
                     <div class="mb-3">
                         <label for="patientUpdatePriority" class="form-label">Prioridade<span class="req">*</span></label>
-                        {{typeof(patient.attributes.priority)}}
                         <div id="patientUpdatePriority">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="patientUpdatePriority" :id="'patientUpdatePrio0' + patient.id" :value="0" v-model="patient.attributes.priority">
+                                <input class="form-check-input" type="radio" name="patientUpdatePriority" :id="'patientUpdatePrio0' + patient.id" :value="-1" v-model="patient.attributes.priority">
                                 <label class="form-check-label" :for="'patientUpdatePrio0' + patient.id">Concluído</label>
                             </div>
                             <div class="form-check form-check-inline">
@@ -124,7 +125,7 @@
                         <input type="text" class="form-control" id="patientPhone" v-model="patient.attributes.phone">
                     </div>
                     <div class="mb-3">
-                        <label for="patientPhone" class="form-label">Data de retirada {{}}</label>
+                        <label for="patientPhone" class="form-label">Data de retirada</label>
                         <input type="date" class="form-control" id="patientPhone" v-model="patient.attributes.withdrawal">
                     </div>
                     <div class="mb-3">
@@ -168,6 +169,7 @@
                             class="btn btn-primary"
                             data-bs-dismiss="modal"
                             @click="updatePatient"
+                            :disabled="!(patient.attributes.name && patient.attributes.cpf && patient.attributes.sus && patient.attributes.procedure && patient.attributes.priority)"
                             >Salvar alterações
                         </button>
                     </div>

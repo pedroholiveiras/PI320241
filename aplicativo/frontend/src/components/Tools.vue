@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import PatientRegisterModal from "@/components/PatientRegisterModal.vue";
     import FilterModal from "@/components/FilterModal.vue";
-    import {ref} from "vue";
+    import {ref, computed} from "vue";
     import {storeToRefs} from "pinia";
     import {usePatientStore} from "@/stores/patientStore";
     import type {Patient, Procedure} from "@/types";
@@ -13,10 +13,10 @@
     const searchBar = ref("");
 
     function search() {
-        filteredPatients.value = patients.value.filter(
-            p => p.attributes.name.includes(
-                searchBar.value
-            )
+        filteredPatients.value = patients.value.filter(p =>
+            p.attributes.name.includes(searchBar.value) ||
+            p.attributes.cpf.includes(searchBar.value) ||
+            p.attributes.sus.includes(searchBar.vaue)
         );
     };
 </script>
@@ -39,6 +39,7 @@
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
                 v-model="searchBar"
+                @keyup.enter="search"
             >
         </div>
         <button
